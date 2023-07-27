@@ -36,7 +36,7 @@ class MessageAdapter(var lsMessage: List<Message>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var msg = lsMessage.get(position)
+        val msg = lsMessage.get(position)
 
         if (holder.itemViewType == SEND_MESSAGE) {
             SendAHolder(binding).bind(msg)
@@ -44,7 +44,7 @@ class MessageAdapter(var lsMessage: List<Message>) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        var msg = lsMessage.get(position)
+        val msg = lsMessage.get(position)
         if (msg.status == SEND_MESSAGE) {
             return SEND_MESSAGE
         }

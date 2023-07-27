@@ -64,14 +64,11 @@
                     android:textSize="16sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{Message.logo}"
-            app:layout_constraintEnd_toEndOf="@+id/cdvMessageSend"
-            app:layout_constraintStart_toEndOf="@+id/cdvMessageSend"
-            app:layout_constraintTop_toTopOf="@id/cdvMessageSend"
-            app:layout_constraintBottom_toBottomOf="@id/cdvMessageSend"/>
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:layout_constraintBottom_toBottomOf="@id/cdvMessageSend"
+            app:layout_constraintStart_toEndOf="@id/cdvMessageSend"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

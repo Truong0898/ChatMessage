@@ -57,7 +57,7 @@
                     app:layout_constraintTop_toTopOf="@id/cvMessageSend"
                     app:layout_constraintBottom_toBottomOf="@id/cvMessageSend"
                     app:layout_constraintStart_toEndOf="@id/cvMessageSend"
-                    android:text="@{Message.logo}" />
+                    android:src="@{Message.logo}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

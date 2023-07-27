@@ -7,5 +7,6 @@ import com.example.chatmessage.model.Message
 class ReceiveHolder(var bindingR: ChatMessageReceiveBinding  ): RecyclerView.ViewHolder(bindingR.root) {
     fun bind(message: Message) {
         bindingR.message = message
+        bindingR.imgSend.setImageResource(message.logo)
     }
 }

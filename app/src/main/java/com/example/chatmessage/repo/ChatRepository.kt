@@ -1,12 +1,15 @@
 package com.example.chatmessage.repo
 
 import android.content.Context
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import com.example.chatmessage.R
 import com.example.chatmessage.model.Message
 import org.json.JSONObject
 import java.io.IOException
 import java.text.SimpleDateFormat
+
 
 class ChatRepository {
     private fun getJsonDataFromAsset(context: Context, filename: String): String?{
@@ -44,7 +47,12 @@ class ChatRepository {
 
     fun Long.toTimeData():String {
         val dateTime = java.util.Date(this)
-        val format = SimpleDateFormat("YYYY.mm.dd HH:mm")
+        val format = SimpleDateFormat("HH:mm")
         return format.format(dateTime)
+    }
+
+    @BindingAdapter("android:src")
+    fun setImageViewResource(imageView: ImageView, resource: Int) {
+        imageView.setImageResource(resource)
     }
 }
