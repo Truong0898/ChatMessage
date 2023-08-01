@@ -2,7 +2,7 @@ package com.example.chatmessage.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.chatmessage.repo.ChatRepository
+import com.example.chatmessage.data.repo.ChatRepository
 
 class ChatViewModelFactory(private val chatRepository: ChatRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

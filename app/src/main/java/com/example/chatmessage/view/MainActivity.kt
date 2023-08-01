@@ -1,52 +1,161 @@
 package com.example.chatmessage.view
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.os.Message
-import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.databinding.DataBindingUtil
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.view.View.OnClickListener
+import android.widget.EditText
+import android.widget.ImageView
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatmessage.R
-import com.example.chatmessage.adapter.MessageAdapter
+import com.example.chatmessage.adapter.adapter.AvatarTopAdapter
+import com.example.chatmessage.adapter.adapter.MessageAdapter
+import com.example.chatmessage.data.model.Message
 import com.example.chatmessage.databinding.ActivityMainBinding
-import com.example.chatmessage.repo.ChatRepository
+import com.example.chatmessage.viewmodel.ChatApplication
 import com.example.chatmessage.viewmodel.ChatViewModel
 import com.example.chatmessage.viewmodel.ChatViewModelFactory
+import com.vanniktech.emoji.EmojiPopup
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
-class MainActivity : ComponentActivity() {
-
-    private lateinit var chatViewModel: ChatViewModel
-
-    private lateinit var messageAdapter: MessageAdapter
-
-    private lateinit var rcvChat : RecyclerView
+class MainActivity : AppCompatActivity(), OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var lsMessage: List<Message>
+    private lateinit var chatViewModel: ChatViewModel
+
+    private lateinit var chatViewModelFactory: ChatViewModelFactory
+
+    private lateinit var chatAdapter: MessageAdapter
+
+    private lateinit var rcvChat: RecyclerView
+    private lateinit var rcvAvatarTop: RecyclerView
+
+    private lateinit var edtSend: EditText
+    private lateinit var imgTop: ImageView
+
+    private lateinit var emojiPopup: EmojiPopup
+
+    private var lsAvatarTop: ArrayList<ByteArray> = ArrayList()
+
+    private var sizeListMessage: Int = 0
+
+    private val viewModel: ChatViewModel by viewModels {
+        ChatViewModelFactory((application as ChatApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+        initView()
+
+
+
+        viewModel.getMessageFromJson()?.observe(this, Observer {
+            it.let {
+                chatAdapter = MessageAdapter(it)
+                // Set adapter to recyclerview
+                rcvChat.adapter = chatAdapter
+                Executors.newSingleThreadScheduledExecutor().schedule({
+                    rcvChat.smoothScrollToPosition(it.size - 1)
+                }, 300, TimeUnit.MILLISECONDS)
+                for (i in it.indices) {
+                    it[i].logo?.let { it1 -> lsAvatarTop.add(it1) }
+                }
+                sizeListMessage = it.size
+                val avatarTopAdapter: AvatarTopAdapter = AvatarTopAdapter(lsAvatarTop)
+                rcvAvatarTop.adapter = avatarTopAdapter
+            }
+        })
+
+    }
+
+    private fun initView() {
+        val imgTop = binding.imgTop
+        imgTop.setImageResource(R.drawable.nui)
+        val btnSend = binding.btnSend
+        btnSend.setOnClickListener(this)
+        edtSend = binding.edtInputChat
+        edtSend.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (count != 0 && before == 0 ) {
+                    btnSend.text = "Gửi"
+                } else if (count == 0 ) {
+                    btnSend.text = "Send"
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+
+
+
+
+        })
         rcvChat = binding.rcvChat
-
+        // this creates a vertical layout Manager
         var linearLayoutManager = LinearLayoutManager(this)
+        // Scrolling to end when keyboard opens
         linearLayoutManager.stackFromEnd = true
         rcvChat.layoutManager = linearLayoutManager
 
-        val chatViewModelFactory = ChatViewModelFactory(ChatRepository())
-        chatViewModel = ViewModelProvider(this,chatViewModelFactory).get(ChatViewModel::class.java)
-        chatViewModel.getMessageFromJson(this,"msg_chat.json")?.observe(this, Observer {
-            Log.i("data json", it.get(0).message.toString())
-            messageAdapter = MessageAdapter(it)
-            rcvChat.adapter = messageAdapter
+        emojiPopup = EmojiPopup.Builder.fromRootView(binding.root).build(edtSend)
+        binding.imgEmoji?.setOnClickListener(this)
 
-            rcvChat.smoothScrollToPosition(messageAdapter.itemCount)
-        })
+        rcvAvatarTop = binding.rcvAvatar
+        val linearLayoutManagerAvatar =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rcvAvatarTop.layoutManager = linearLayoutManagerAvatar
+
     }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.btnSend -> {
+                val mess = edtSend.text.toString()
+                sendMessage(mess = mess)
+            }
+
+            R.id.imgEmoji -> {
+                emojiPopup.toggle()
+            }
+        }
+    }
+
+    private fun sendMessage(mess: String) {
+        var messSend: Message = Message()
+        // Add message to list
+        messSend.name = "Me"
+        messSend.message = mess
+        messSend.timeLine =
+            AppUtils.getDateFromString(System.currentTimeMillis().toString()).toString()
+        messSend.status = 0
+
+        viewModel.insertMessage(message = messSend)
+
+        // Scroll to bottomS
+        Executors.newSingleThreadScheduledExecutor().schedule({
+            rcvChat.smoothScrollToPosition(sizeListMessage - 1)
+        }, 300, TimeUnit.MILLISECONDS)
+    }
+
 }
+
+
+
 

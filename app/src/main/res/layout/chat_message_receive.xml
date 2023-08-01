@@ -7,17 +7,17 @@
 
         <variable
             name="Message"
-            type="com.example.chatmessage.model.Message" />
+            type="com.example.chatmessage.data.model.Message" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp">
 
         <TextView
-            android:id="@+id/tvDateSend"
+            android:id="@+id/tvDateRec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cdvMessageSend"
+            android:id="@+id/cdvMessageRec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="#eef1f6"
@@ -40,18 +40,18 @@
             app:cardElevation="0dp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toStartOf="@+id/tvDateSend"
-            app:layout_constraintTop_toBottomOf="@+id/tvDateSend">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDateRec">
 
             <LinearLayout
-                android:id="@+id/llChatYou"
+                android:id="@+id/llChatRec"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
 
                 <TextView
-                    android:id="@+id/tvMessageSend"
+                    android:id="@+id/tvMessageRec"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -59,16 +59,17 @@
                     android:paddingLeft="12dp"
                     android:paddingTop="8dp"
                     android:paddingRight="12dp"
-                    android:text="@{Message.message}"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:text="@{Message.message}"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imgSend"
+            android:id="@+id/imgRec"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            app:layout_constraintBottom_toBottomOf="@id/cdvMessageSend"
-            app:layout_constraintStart_toEndOf="@id/cdvMessageSend"/>
+            app:layout_constraintBottom_toBottomOf="@id/cdvMessageRec"
+            app:layout_constraintStart_toEndOf="@id/cdvMessageRec" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

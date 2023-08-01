@@ -10,16 +10,13 @@ android {
 
     defaultConfig {
         applicationId "com.example.chatmessage"
-        applicationId "info.androidhive.databinding"
-        minSdk 33
+        minSdk 29
         targetSdk 33
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+
     }
 
     buildTypes {
@@ -36,18 +33,14 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
+        viewBinding true
         dataBinding true
-    }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -68,4 +61,12 @@ dependencies {
 
     // Saved state module for ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+
+    def room_version = "2.5.2"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    implementation 'com.vanniktech:emoji-google:0.7.0'
 }

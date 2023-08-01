@@ -5,7 +5,7 @@
     <data>
         <variable
             name="Message"
-            type="com.example.chatmessage.model.Message" />
+            type="com.example.chatmessage.data.model.Message" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,6 +45,13 @@
                     android:id="@+id/tvMessageSend"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:maxWidth="260dp"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="12dp"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
                     android:text="@{Message.message}" />
 
             </LinearLayout>
@@ -56,8 +63,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="@id/cvMessageSend"
                     app:layout_constraintBottom_toBottomOf="@id/cvMessageSend"
-                    app:layout_constraintStart_toEndOf="@id/cvMessageSend"
-                    android:src="@{Message.logo}" />
+                    app:layout_constraintStart_toEndOf="@id/cvMessageSend" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
