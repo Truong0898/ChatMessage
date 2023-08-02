@@ -103,13 +103,10 @@ abstract class  ChatDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: ChatDatabase? = null
-
         fun getDatabase(
             context: Context,
             scope: CoroutineScope
         ): ChatDatabase {
-
-
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

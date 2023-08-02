@@ -30,10 +30,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#774df2"
+            app:cardBackgroundColor="#8E98AE"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvDateSend">
 
             <LinearLayout

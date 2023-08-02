@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     private lateinit var emojiPopup: EmojiPopup
 
-    private var lsAvatarTop: ArrayList<ByteArray> = ArrayList()
+//    private var lsAvatarTop: ArrayList<ByteArray> = ArrayList()
 
     private var sizeListMessage: Int = 0
 
@@ -72,12 +72,12 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 Executors.newSingleThreadScheduledExecutor().schedule({
                     rcvChat.smoothScrollToPosition(it.size - 1)
                 }, 300, TimeUnit.MILLISECONDS)
-                for (i in it.indices) {
-                    it[i].logo?.let { it1 -> lsAvatarTop.add(it1) }
-                }
+//                for (i in it.indices) {
+//                    it[i].logo?.let { it1 -> lsAvatarTop.add(it1) }
+//                }
                 sizeListMessage = it.size
-                val avatarTopAdapter: AvatarTopAdapter = AvatarTopAdapter(lsAvatarTop)
-                rcvAvatarTop.adapter = avatarTopAdapter
+//                val avatarTopAdapter: AvatarTopAdapter = AvatarTopAdapter(lsAvatarTop)
+//                rcvAvatarTop.adapter = avatarTopAdapter
             }
         })
 
@@ -87,6 +87,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         val imgTop = binding.imgTop
         imgTop.setImageResource(R.drawable.nui)
         val btnSend = binding.btnSend
+        val btnLike = binding.btnLike
         btnSend.setOnClickListener(this)
         edtSend = binding.edtInputChat
         edtSend.addTextChangedListener(object : TextWatcher {
@@ -95,32 +96,34 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (count != 0 && before == 0 ) {
-                    btnSend.text = "Gửi"
-                } else if (count == 0 ) {
-                    btnSend.text = "Send"
+                if (count != 0 && before == 0) {
+                    btnSend.visibility = View.VISIBLE
+                    btnLike?.visibility = View.GONE
+                } else if (count == 0) {
+                    btnSend.visibility = View.GONE
+                    btnLike?.visibility = View.VISIBLE
+                    edtSend.hint = "Nhập tin nhắn"
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
-
-
 
 
         })
         rcvChat = binding.rcvChat
         // this creates a vertical layout Manager
         var linearLayoutManager = LinearLayoutManager(this)
-        // Scrolling to end when keyboard opens
+//         Scrolling to end when keyboard opens
         linearLayoutManager.stackFromEnd = true
         rcvChat.layoutManager = linearLayoutManager
 
         emojiPopup = EmojiPopup.Builder.fromRootView(binding.root).build(edtSend)
         binding.imgEmoji?.setOnClickListener(this)
 
-        rcvAvatarTop = binding.rcvAvatar
-        val linearLayoutManagerAvatar =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rcvAvatarTop.layoutManager = linearLayoutManagerAvatar
+//        rcvAvatarTop = binding.rcvAvatar
+//        val linearLayoutManagerAvatar =
+//            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+//        rcvAvatarTop.layoutManager = linearLayoutManagerAvatar
 
     }
 
@@ -134,6 +137,10 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             R.id.imgEmoji -> {
                 emojiPopup.toggle()
             }
+
+            R.id.btnLike -> {
+
+            }
         }
     }
 
@@ -145,13 +152,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         messSend.timeLine =
             AppUtils.getDateFromString(System.currentTimeMillis().toString()).toString()
         messSend.status = 0
-
         viewModel.insertMessage(message = messSend)
-
-        // Scroll to bottomS
-        Executors.newSingleThreadScheduledExecutor().schedule({
-            rcvChat.smoothScrollToPosition(sizeListMessage - 1)
-        }, 300, TimeUnit.MILLISECONDS)
     }
 
 }

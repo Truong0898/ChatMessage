@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ChatMessage</string>
+    <string name="message">Nói gì đi!\n</string>
+    <string name="send">Send</string>
 </resources>
