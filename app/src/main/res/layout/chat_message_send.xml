@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="Message"
             type="com.example.chatmessage.data.model.Message" />
@@ -10,39 +12,56 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp">
 
         <TextView
             android:id="@+id/tvDateSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{Message.timeLine}"
-            android:paddingTop="32dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:layout_marginTop="32dp"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
             android:paddingBottom="4dp"
+            android:text="@{Message.timeLine}"
+            android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgSend"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/img_3"
+            app:layout_constraintBottom_toBottomOf="@id/cdvMessageSend"
+            app:layout_constraintTop_toTopOf="@id/cdvMessageSend"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvMessageSend"
+            android:id="@+id/cdvMessageSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:cardBackgroundColor="#eef1f6"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#8E98AE"
             app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDateSend">
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintStart_toEndOf="@id/imgSend"
+            app:layout_constraintTop_toBottomOf="@+id/tvDateSend">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/llChatSend"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+
                 <TextView
                     android:id="@+id/tvMessageSend"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:maxWidth="260dp"
@@ -51,19 +70,9 @@
                     android:paddingRight="12dp"
                     android:textColor="#000000"
                     android:textSize="16sp"
-                    android:text="@{Message.message}" />
-
+                    android:text="@{Message.message}"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-                <ImageView
-                    android:id="@+id/imgSend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/cvMessageSend"
-                    app:layout_constraintBottom_toBottomOf="@id/cvMessageSend"
-                    app:layout_constraintStart_toEndOf="@id/cvMessageSend" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -28,7 +28,7 @@ abstract class  ChatDatabase : RoomDatabase() {
             super.onCreate(db)
             INSTANCE?.let { chatDatabase ->
                 scope.launch {
-                    var messageDao: MessageDao = chatDatabase.messageDao()
+                    val messageDao: MessageDao = chatDatabase.messageDao()
 
                     val lsMessage = getListMessage(context, "msg_chat.json")
                     if (lsMessage != null) {
@@ -60,26 +60,26 @@ abstract class  ChatDatabase : RoomDatabase() {
         }
 
         fun getListMessage(context: Context, fileName: String): List<Message>? {
-            var lstMessage = ArrayList<Message>()
-            var jsonData = getJsonDataFromAsset(context, fileName) ?: null
+            val lstMessage = ArrayList<Message>()
+            val jsonData = getJsonDataFromAsset(context, fileName) ?: null
 
             // Cast string to JSON
             val jsonObject = JSONObject(jsonData)
             val jsonArray = jsonObject.getJSONArray("data")
-            var lsAvatar = ArrayList<Int>()
+            val lsAvatar = ArrayList<Int>()
             for (i in 0 until jsonArray.length()) {
                 if (i % 2 == 0) {
                     lsAvatar.add(R.drawable.img)
                 } else if (i % 3 == 0) {
                     lsAvatar.add((R.drawable.img_1))
                 } else {
-                    lsAvatar.add(R.drawable.img)
+                    lsAvatar.add(R.drawable.img_3)
                 }
             }
             for (i in 0 until jsonArray.length()) {
                 // Get message from array
                 val messageJsonObject = jsonArray[i] as JSONObject
-                var message: Message = Message()
+                val message: Message = Message()
                 message.logo = AppUtils.convertImageToByteArray(context, lsAvatar[i])
                 message.name = messageJsonObject.getString("name")
                 message.message = messageJsonObject.getString("message")

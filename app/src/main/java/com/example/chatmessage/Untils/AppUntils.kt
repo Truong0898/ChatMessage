@@ -1,12 +1,16 @@
 package com.example.chatmessage.Untils
 
+import android.R
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
+import kotlinx.coroutines.CoroutineStart
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
+import kotlin.io.encoding.Base64
+
 
 class AppUtils {
 
@@ -30,6 +34,7 @@ class AppUtils {
                     // Cùng ngày
                     return false
                 }
+
                 resultComapre > 0 || resultComapre < 0 -> {
                     // Khác ngày
                     return true
@@ -38,7 +43,7 @@ class AppUtils {
             return true
         }
 
-        fun convertImageToByteArray(context: Context, idImage: Int) : ByteArray{
+        fun convertImageToByteArray(context: Context, idImage: Int): ByteArray {
             val bitmap = BitmapFactory.decodeResource(context.resources, idImage)
             val stream = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
@@ -48,6 +53,7 @@ class AppUtils {
         fun byteArrayToBitmap(data: ByteArray): Bitmap {
             return BitmapFactory.decodeByteArray(data, 0, data.size)
         }
+
 
     }
 }

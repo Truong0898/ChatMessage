@@ -16,8 +16,6 @@ class SendAHolder(var binding: ChatMessageSendBinding): RecyclerView.ViewHolder(
         }
 
         binding.message = message
-        binding.imgSend.setImageBitmap(message.logo?.let {
-            AppUtils.byteArrayToBitmap(it)
-        })
+
     }
 }

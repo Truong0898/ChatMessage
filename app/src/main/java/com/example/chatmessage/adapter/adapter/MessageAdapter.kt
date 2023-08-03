@@ -3,6 +3,8 @@ package com.example.chatmessage.adapter.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chatmessage.R
+import com.example.chatmessage.Untils.AppUtils
 import com.example.chatmessage.adapter.ViewHolder.ReceiveHolder
 import com.example.chatmessage.adapter.ViewHolder.SendAHolder
 import com.example.chatmessage.databinding.ChatMessageReceiveBinding
